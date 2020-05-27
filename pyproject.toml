@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "trackbasket_BE"
+version = "0.1.0"
+description = "back end API for trackbasket"
+authors = ["Alexis Dumortier <dumortier.alexis@gmail.com>", "Maria Ronauli mronauli@gmail.com"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+Flask = "1.0.0"
+Flask-RESTful ="*"
+Flask-SQLAlchemy ="*"
+Flask-Migrate="*"
+Flask-Script="*"
+psycopg2="*"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

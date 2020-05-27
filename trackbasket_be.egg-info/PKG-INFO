@@ -1,0 +1,11 @@
+Metadata-Version: 1.2
+Name: trackbasket-be
+Version: 0.1.0
+Summary: back end API for trackbasket
+Home-page: UNKNOWN
+Author: Alexis Dumortier
+Author-email: dumortier.alexis@gmail.com
+License: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN
+Requires-Python: >=3.7,<4.0
