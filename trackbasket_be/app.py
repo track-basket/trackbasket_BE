@@ -2,7 +2,7 @@ from flask import Flask, request
 from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 from models.volunteer import db, Volunteer
-from resources.volunteer import Volunteer
+from resources.volunteer import Volunteers
 
 POSTGRES = {
     'user': 'postgres',
@@ -20,6 +20,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 
-api.add_resource(Volunteer, '/volunteer/<int:id>')
+api.add_resource(Volunteers, '/volunteer/<int:id>')
 
-app.run(port= 5000, debug= True)
+if __name__ == '__main__':
+    app.run(port= 5000, debug= True)
