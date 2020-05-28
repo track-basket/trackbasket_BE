@@ -5,13 +5,12 @@ from models.basemodel import BaseModel
 class Volunteers(Resource):
 
   def get(self,id):
-    volunteer = db.session.query(Volunteer).get(id)
-    return {'volunteer': volunteer.name}
+    volunteer = db.session.query(Volunteer).filter_by(volunteer_id=id).first()
+    return {'data': { 'id': 'volunteer', 'attributes': {'id': volunteer.volunteer_id, 'name': volunteer.name, 'phone number': volunteer.phone_number} } }
 
   def post(self, id):
     request_data = request.json
-    volunteer = Volunteer(name=request_data['name'], phone_number=request_data['phone_number'])
+    volunteer = Volunteer(name=request_data['name'], phone_number=request_data['phone_number'], volunteer_id=id)
     db.session.add(volunteer)
     db.session.commit()
-    # write to the database
     return {'volunteer': request_data}
