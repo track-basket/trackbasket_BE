@@ -9,14 +9,15 @@ class AtRiskUser(BaseModel, db.Model):
   address = db.Column(db.String)
   city = db.Column(db.String)
   state = db.Column(db.String)
+  zipcode = db.Column(db.String)
   phone_number = db.Column(db.String)
 
   def json(self):
-    return {'name': self.name, 'at_risk_user_id': self.at_risk_user_id, 'address': self.address, 'city': self.city, 'state': self.state, 'phone_number': self.phone_number}
+    return {'data': { 'id': 'at_risk_user', 'attributes': {'name': self.name, 'at_risk_user_id': self.at_risk_user_id, 'address': self.address, 'city': self.city, 'state': self.state, 'zip code': self.zipcode, 'phone number': self.phone_number} } }
 
   @classmethod 
   def find_by_id(cls, id):
-    return cls.query.filter_by(at_risk_user_id=id).first()
+    return cls.query.filter_by(at_risk_user_id=id).first()                                                                                                                                            
   
   def save_to_db(self):
     db.session.add(self)
