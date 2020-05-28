@@ -3,6 +3,9 @@ from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 from models.volunteer import db, Volunteer
 from resources.volunteer import Volunteers
+from models.at_risk_user import db, AtRiskUser
+from resources.at_risk_user import AtRiskUsers
+from resources.routes import initialize_routes
 
 POSTGRES = {
     'user': 'postgres',
@@ -20,7 +23,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 
-api.add_resource(Volunteers, '/volunteer/<string:id>')
+initialize_routes(api)
 
 if __name__ == '__main__':
     app.run(port= 5000, debug= True)
