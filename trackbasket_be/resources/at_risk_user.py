@@ -7,7 +7,7 @@ class AtRiskUsers(Resource):
   def get(self, id): 
     at_risk_user = AtRiskUser.find_by_id(id)
     if at_risk_user:
-      return at_risk_user.json()
+      return at_risk_user.json(), 200
     else: 
       return {'data': { 'id': 'at_risk_user', 'attributes': {'error': "User not found"} } }, 400
   
@@ -32,7 +32,7 @@ class AtRiskUsers(Resource):
     else: 
       return {'data': { 'id': 'at_risk_user', 'attributes': {'error': "User not found"} } }, 400
       
-    at_risk_user.save_to_db()
+    db.session.commit()
     
-    return at_risk_user.json()
+    return at_risk_user.json(), 200
     
