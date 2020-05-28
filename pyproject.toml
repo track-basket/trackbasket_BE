@@ -13,6 +13,7 @@ Flask-Migrate="*"
 Flask-Script="*"
 psycopg2="*"
 
+
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
 
