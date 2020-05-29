@@ -1,9 +1,14 @@
+
 from flask import Flask, request
 from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
-from models.volunteer import db, Volunteer
+from models.basemodel import db
+from models.volunteer import Volunteer
 from resources.volunteer import Volunteers
 from resources.store import Stores
+from models.at_risk_user import AtRiskUser
+from resources.at_risk_user import AtRiskUsers
+from models.store import Store
 
 POSTGRES = {
     'user': 'postgres',
@@ -15,6 +20,8 @@ POSTGRES = {
 
 app = Flask(__name__)
 api = Api(app)
+
+
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\%(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
