@@ -2,6 +2,7 @@ from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from app import app, db
 from models.volunteer import Volunteer
+from models.at_risk_user import AtRiskUser
 from models.basemodel import BaseModel
 
 migrate = Migrate(app, db)
