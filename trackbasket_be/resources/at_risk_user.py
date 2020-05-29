@@ -1,6 +1,8 @@
 from flask_restful import Resource, reqparse, request 
-from models.at_risk_user import AtRiskUser, db 
-from models.basemodel import BaseModel 
+from models.at_risk_user import AtRiskUser
+from models.basemodel import BaseModel,db 
+from models.krogerservice import Krogerservice
+from models.store import Store
 
 class AtRiskUsers(Resource):
   
@@ -12,10 +14,14 @@ class AtRiskUsers(Resource):
       return {'data': { 'id': 'at_risk_user', 'attributes': {'error': "User not found"} } }, 400
   
   def post(self, id):
-    data = request.json 
+    data = request.json
+
     at_risk_user = AtRiskUser(at_risk_user_id=id, **data)
-    at_risk_user.save_to_db()
-    
+    store_info = Krogerservice.closest_store(data['zipcode'])
+    store = Store(**store_info, at_risk_user=at_risk_user)
+    db.session.add(at_risk_user)
+    db.session.add(store)
+    db.session.commit()
     return at_risk_user.json(), 201
 
   def patch(self, id):
