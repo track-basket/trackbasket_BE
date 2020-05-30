@@ -1,1 +1,1 @@
-web: gunicorn trackbasket_be/app:app
+web: gunicorn ./trackbasket_be/app:app
