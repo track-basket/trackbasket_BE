@@ -7,6 +7,7 @@ from resources.volunteer import Volunteers
 from resources.store import Stores
 from models.at_risk_user import AtRiskUser
 from resources.at_risk_user import AtRiskUsers
+from resources.shopping_list import ShoppingLists
 from models.store import Store
 from resources.items import Items
 
@@ -33,6 +34,7 @@ api.add_resource(AtRiskUsers, '/atriskuser/<string:id>')
 api.add_resource(Stores, '/store/<string:id>')
 api.add_resource(Items, '/items/<string:term>')
 
+api.add_resource(ShoppingLists, '/shoppinglist/<string:id>')
 
 if __name__ == '__main__':
     app.run(port= 5000, debug= True)

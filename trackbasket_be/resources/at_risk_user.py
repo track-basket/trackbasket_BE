@@ -15,7 +15,6 @@ class AtRiskUsers(Resource):
   
   def post(self, id):
     data = request.json
-
     at_risk_user = AtRiskUser(at_risk_user_id=id, **data)
     store_info = Krogerservice.closest_store(data['zipcode'])
     store = Store(**store_info, at_risk_user=at_risk_user)
@@ -37,8 +36,6 @@ class AtRiskUsers(Resource):
       at_risk_user.phone_number = data['phone_number']
     else: 
       return {'data': { 'id': 'at_risk_user', 'attributes': {'error': "User not found"} } }, 400
-      
     db.session.commit()
-    
     return at_risk_user.json(), 200
     
