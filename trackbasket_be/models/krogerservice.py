@@ -69,16 +69,14 @@ class Krogerservice:
       data['name'] = item['description']
       data['productId'] = item['productId']
       data['upc'] = item['upc']
-      
-      for price in item['items']:
-        data['unit_price'] = price['price']['regular']
-        
-      for aisle in item['aisleLocations']:
-        data['aisle_number'] = int(aisle['number']) 
-        
+      data['aisle_number'] = int(item['aisleLocations'][0]['number']) 
+      data['unit_price'] = item['items'][0]['price']['regular']
       for image in item['images']:
-        data['image'] = image['sizes'][0]['url']    
-      
+        if image['perspective'] == 'front': 
+          for size in image['sizes']: 
+            if size['size'] == 'medium':
+              data['image'] = size['url']
+              
       items.append(data)
       
     return { 'data': { 'id': 'items', 'attributes':  items } }
