@@ -6,14 +6,13 @@ import requests
 class Items(Resource): 
   
   def get(self, term):
-    
     params = request.json
     at_risk_user_id = params['at_risk_user_id']
     items = Krogerservice.item_search(term, at_risk_user_id)
-    if items:
-      return items
+    if  items['data']['attributes'] == []:
+       return {'data': { 'id': 'items', 'attributes': {'error': 'Item not found'} } }, 400
     else:
-       return {'data': { 'id': 'items', 'attributes': {'message': 'Item not found'} } }, 400
+      return items, 200
       
   
     
