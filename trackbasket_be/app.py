@@ -10,6 +10,7 @@ from resources.at_risk_user import AtRiskUsers
 from resources.shopping_list import ShoppingLists
 from models.store import Store
 from resources.items import Items
+from resources.list_shopping_lists import ListShoppingLists
 
 POSTGRES = {
     'user': 'postgres',
@@ -35,6 +36,7 @@ api.add_resource(Stores, '/store/<string:id>')
 api.add_resource(Items, '/items/<string:term>')
 
 api.add_resource(ShoppingLists, '/shoppinglist/<string:id>')
+api.add_resource(ListShoppingLists, '/listshoppinglists/')
 
 if __name__ == '__main__':
     app.run(port= 5000, debug= True)
