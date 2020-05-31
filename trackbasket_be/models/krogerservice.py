@@ -64,16 +64,7 @@ class Krogerservice:
     items = []   
       
     for item in json_items:
-      data = {
-        
-              "name":None, 
-              "description":None, 
-              "unit_price":None, 
-              "image":None, 
-              "productId":None, 
-              "upc":None, 
-              "aisle_number":None
-        }
+      data = {}
       
       data['name'] = item['description']
       data['productId'] = item['productId']
