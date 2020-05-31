@@ -1,4 +1,3 @@
-
 from flask import Flask, request
 from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
@@ -10,6 +9,7 @@ from models.at_risk_user import AtRiskUser
 from resources.at_risk_user import AtRiskUsers
 from resources.shopping_list import ShoppingLists
 from models.store import Store
+from resources.items import Items
 
 POSTGRES = {
     'user': 'postgres',
@@ -32,6 +32,8 @@ db.init_app(app)
 api.add_resource(Volunteers, '/volunteer/<string:id>')
 api.add_resource(AtRiskUsers, '/atriskuser/<string:id>')
 api.add_resource(Stores, '/store/<string:id>')
+api.add_resource(Items, '/items/<string:term>')
+
 api.add_resource(ShoppingLists, '/shoppinglist/<string:id>')
 
 if __name__ == '__main__':

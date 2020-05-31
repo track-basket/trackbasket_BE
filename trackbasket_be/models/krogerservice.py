@@ -1,4 +1,5 @@
 from flask_restful import Resource, reqparse, request
+from models.at_risk_user import AtRiskUser
 import requests
 import os
 
@@ -47,4 +48,47 @@ class Krogerservice:
               'latitude': parsed_response['data'][0]['geolocation']['latitude'],
               'longitude': parsed_response['data'][0]['geolocation']['longitude']            
             }
+  
+  @classmethod
+  def item_search(cls, term, at_risk_user_id):
+    
+    user = AtRiskUser.find_by_id(at_risk_user_id) 
+    nearest_store = user.store[0]
+    nearest_store_id = nearest_store.location_id
+    parameters = {'filter.term': term, 'filter.locationId': nearest_store_id}
+    headers = {'Authorization': 'Bearer {}'.format(Krogerservice.return_token())}
+    response = requests.get('https://api.kroger.com/v1/products', params=parameters, headers=headers)
+
+    json_items = response.json()['data']
+    
+    items = []   
+      
+    for item in json_items:
+      data = {
+        
+              "name":None, 
+              "description":None, 
+              "unit_price":None, 
+              "image":None, 
+              "productId":None, 
+              "upc":None, 
+              "aisle_number":None
+        }
+      
+      data['name'] = item['description']
+      data['productId'] = item['productId']
+      data['upc'] = item['upc']
+      
+      for price in item['items']:
+        data['unit_price'] = price['price']['regular']
+        
+      for aisle in item['aisleLocations']:
+        data['aisle_number'] = int(aisle['number']) 
+        
+      for image in item['images']:
+        data['image'] = image['sizes'][0]['url']    
+      
+      items.append(data)
+      
+    return { 'data': { 'id': 'items', 'attributes':  items } }
   
