@@ -27,9 +27,3 @@ class ListShoppingLists(Resource):
       lists_info.append(list_info)
       
     return {'data': { 'id': 'listshoppinglists', 'attributes': { 'lists': lists_info } } }, 200
-
-
-    # return {'data': {  "id": "listshoppinglists","attributes":
-    #         { "latLng": "{},{}".format(store.latitude, store.longitude), "status": shopping_list.status,
-    #           "created_date": shopping_list.created_date.strftime("%d/%m/%Y %H:%M:%S"),
-    #           "items": [item.json() for item in shopping_list.items] } } }
