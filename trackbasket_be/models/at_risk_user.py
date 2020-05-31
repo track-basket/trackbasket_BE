@@ -1,5 +1,6 @@
 from models.basemodel import BaseModel, db
 from models.store import Store
+from models.shopping_list import ShoppingList
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import backref
 import datetime 
@@ -15,6 +16,7 @@ class AtRiskUser(BaseModel, db.Model):
   zipcode = db.Column(db.String)
   phone_number = db.Column(db.String)
   store = db.relationship('Store', backref=backref('at_risk_user', uselist=False))
+  shopping_lists = db.relationship('ShoppingList', backref='at_risk_user')
 
   def json(self):
     return {'data': { 'id': 'at_risk_user', 'attributes': {'name': self.name, 'at_risk_user_id': self.at_risk_user_id, 'address': self.address, 'city': self.city, 'state': self.state, 'zip code': self.zipcode, 'phone number': self.phone_number} } }
@@ -26,3 +28,4 @@ class AtRiskUser(BaseModel, db.Model):
   def save_to_db(self):
     db.session.add(self)
     db.session.commit()
+    
