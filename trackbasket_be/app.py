@@ -33,7 +33,7 @@ db.init_app(app)
 api.add_resource(Volunteers, '/volunteer/<string:id>')
 api.add_resource(AtRiskUsers, '/atriskuser/<string:id>')
 api.add_resource(Stores, '/store/<string:id>')
-api.add_resource(Items, '/items/<string:term>')
+api.add_resource(Items, '/items')
 
 api.add_resource(ShoppingLists, '/shoppinglist/<string:id>')
 api.add_resource(ListShoppingLists, '/listshoppinglists/')
