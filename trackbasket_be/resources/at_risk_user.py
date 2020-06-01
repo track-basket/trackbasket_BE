@@ -15,13 +15,16 @@ class AtRiskUsers(Resource):
   
   def post(self, id):
     data = request.json
-    at_risk_user = AtRiskUser(at_risk_user_id=id, **data)
-    store_info = Krogerservice.closest_store(data['zipcode'])
-    store = Store(**store_info, at_risk_user=at_risk_user)
-    db.session.add(at_risk_user)
-    db.session.add(store)
-    db.session.commit()
-    return at_risk_user.json(), 201
+    if AtRiskUser.query.filter_by(at_risk_user_id=id).first() is None:
+      at_risk_user = AtRiskUser(at_risk_user_id=id, **data)
+      store_info = Krogerservice.closest_store(data['zipcode'])
+      store = Store(**store_info, at_risk_user=at_risk_user)
+      db.session.add(at_risk_user)
+      db.session.add(store)
+      db.session.commit()
+      return at_risk_user.json(), 201
+    else:
+      return {'data': { 'id': 'at_risk_user', 'attributes': {'error': "AtRiskUser already exists"} } }, 400
 
   def patch(self, id):
     data = request.json 
