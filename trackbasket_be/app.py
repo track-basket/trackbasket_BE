@@ -11,21 +11,21 @@ from resources.shopping_list import ShoppingLists
 from models.store import Store
 from resources.items import Items
 from resources.list_shopping_lists import ListShoppingLists
-
-POSTGRES = {
-    'user': 'postgres',
-    'pw': 'password',
-    'db': 'my_database',
-    'host': 'localhost',
-    'port': '5432',
-}
+import os
+# POSTGRES = {
+#     'user': 'postgres',
+#     'pw': 'password',
+#     'db': 'my_database',
+#     'host': 'localhost',
+#     'port': '5432',
+# }
 
 app = Flask(__name__)
 api = Api(app)
 
 
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\%(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\%(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
