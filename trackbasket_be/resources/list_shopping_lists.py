@@ -22,7 +22,7 @@ class ListShoppingLists(Resource):
       for item in lst.items:
         total += item.quantity
       list_info['item_count'] = total
-      list_info['lat_long'] = "{},{}".format(lst.at_risk_user.store[0].latitude, lst.at_risk_user.store[0].longitude)
+      list_info['latitude_longitude'] = [float(lst.at_risk_user.store[0].latitude), float(lst.at_risk_user.store[0].longitude)]
       list_info['created_at'] = lst.created_date.strftime("%d/%m/%Y %H:%M:%S")
       lists_info.append(list_info)
       
