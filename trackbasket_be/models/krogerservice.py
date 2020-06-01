@@ -29,7 +29,6 @@ class Krogerservice:
   def closest_store(cls, zipcode):
     parameters = {'filter.zipCode.near': zipcode, 'filter.limit':1}
     headers = {'Authorization': 'Bearer {}'.format(Krogerservice.return_token())}  
-    
     response = requests.get('https://api.kroger.com/v1/locations?', params=parameters, headers=headers)
     parsed_response = response.json()
 
