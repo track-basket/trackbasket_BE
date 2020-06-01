@@ -13,10 +13,13 @@ class Volunteers(Resource):
 
   def post(self, id):
     request_data = request.json
-    volunteer = Volunteer(name=request_data['name'], phone_number=request_data['phone_number'], volunteer_id=id)
-    db.session.add(volunteer)
-    db.session.commit()
-    return {'data': { 'id': 'volunteer', 'attributes': {'id': volunteer.volunteer_id, 'name': volunteer.name, 'phone number': volunteer.phone_number} } }, 201
+    if Volunteer.query.filter_by(volunteer_id=id).first() is None:
+      volunteer = Volunteer(name=request_data['name'], phone_number=request_data['phone_number'], volunteer_id=id)
+      db.session.add(volunteer)
+      db.session.commit()
+      return {'data': { 'id': 'volunteer', 'attributes': {'id': volunteer.volunteer_id, 'name': volunteer.name, 'phone number': volunteer.phone_number} } }, 201
+    else:
+      return {'data': { 'id': 'volunteer', 'attributes': {'error': "Volunteer already exists"} } }, 400
 
   def patch(self, id):
     request_data = request.json
