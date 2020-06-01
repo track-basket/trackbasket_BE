@@ -13,7 +13,3 @@ class Items(Resource):
        return {'data': { 'id': 'items', 'attributes': {'error': 'Item not found'} } }, 400
     else:
       return items, 200
-      
-  
-    
-    
