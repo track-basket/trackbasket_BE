@@ -44,4 +44,20 @@ class AtRiskUsers(Resource):
       return {'data': { 'id': 'at_risk_user', 'attributes': {'error': "User not found"} } }, 400
     db.session.commit()
     return at_risk_user.json(), 200
+  
+  def delete(self, id):
+    at_risk_user = db.session.query(AtRiskUser).filter_by(at_risk_user_id=id).first()
+    if at_risk_user:
+      for lst in at_risk_user.shopping_lists:
+        db.session.delete(lst) 
+        db.session.commit()
+      db.session.commit()
+      db.session.delete(at_risk_user)
+      db.session.commit()
+      return {'data': { 'id': 'at_risk_user', 'attributes': {'message': "volunteer with id {} successfully deleted".format(id)} } }, 200
+    else:
+      return {'data': { 'id': 'at_risk_user', 'attributes': {'error': "at_risk_user does not exist"} } }, 400  
+      
+      
+    
     
