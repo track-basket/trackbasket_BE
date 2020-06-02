@@ -54,7 +54,7 @@ class AtRiskUsers(Resource):
       db.session.commit()
       db.session.delete(at_risk_user)
       db.session.commit()
-      return {'data': { 'id': 'at_risk_user', 'attributes': {'message': "volunteer with id {} successfully deleted".format(id)} } }, 200
+      return {'data': { 'id': 'at_risk_user', 'attributes': {'message': "at_risk_user with id {} successfully deleted".format(id)} } }, 200
     else:
       return {'data': { 'id': 'at_risk_user', 'attributes': {'error': "at_risk_user does not exist"} } }, 400  
       
