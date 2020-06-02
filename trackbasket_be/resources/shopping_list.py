@@ -12,10 +12,10 @@ class ShoppingLists(Resource):
   def post(self,id):
     request_data = request.json
     at_risk_user = AtRiskUser.query.filter_by(at_risk_user_id=id).first()
-    store = at_risk_user.store[0]
     if at_risk_user is None:
       return {'data': { 'id': 'shoppinglist', 'attributes': {'error': "At risk user #{} not found".format(id)} } }, 400
     else:
+      store = at_risk_user.store[0]
       if request_data["items"] == []:
         return {'data': { 'id': 'shoppinglist', 'attributes': {'error': "Shopping List can not be empty"} } }, 400
       shopping_list = ShoppingList(at_risk_user_id=at_risk_user.id, status=request_data['status'], created_date=datetime.now())
