@@ -28,13 +28,15 @@ class Krogerservice:
   
   @classmethod
   def closest_store(cls, zipcode):
+    token = Krogerservice.refresh_token()
     parameters = {'filter.zipCode.near': zipcode, 'filter.limit':1}
-    headers = {'Authorization': 'Bearer {}'.format(Krogerservice.refresh_token())}  
+    headers = {'Authorization': 'Bearer {}'.format(token)}  
     response = requests.get('https://api.kroger.com/v1/locations?', params=parameters, headers=headers)
 #     parsed_response = response.json()
     return {'status code': response.status_code, 
             'response': response.text, 
-            'content-type': response.headers.get('Content-Type')
+            'content-type': response.headers.get('Content-Type'), 
+            'token': token
            }
 
     if response.status_code != 200:
