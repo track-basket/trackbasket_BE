@@ -33,7 +33,8 @@ class Krogerservice:
     response = requests.get('https://api.kroger.com/v1/locations?', params=parameters, headers=headers)
 #     parsed_response = response.json()
     return {'status code': response.status_code, 
-            'response': response.text
+            'response': response.text, 
+            'content-type': response.headers.get('Content-Type')
            }
 
     if response.status_code != 200:
