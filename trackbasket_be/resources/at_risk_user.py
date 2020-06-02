@@ -3,6 +3,7 @@ from models.at_risk_user import AtRiskUser
 from models.basemodel import BaseModel,db 
 from models.krogerservice import Krogerservice
 from models.store import Store
+from models.item import Item
 
 class AtRiskUsers(Resource):
   
@@ -44,4 +45,23 @@ class AtRiskUsers(Resource):
       return {'data': { 'id': 'at_risk_user', 'attributes': {'error': "User not found"} } }, 400
     db.session.commit()
     return at_risk_user.json(), 200
+  
+  def delete(self, id):
+    at_risk_user = db.session.query(AtRiskUser).filter_by(at_risk_user_id=id).first()
+    if at_risk_user:
+      for lst in at_risk_user.shopping_lists:
+        if lst.items != None:
+          for item in lst.items:
+            db.session.delete(item) 
+            db.session.commit()
+        db.session.delete(lst) 
+        db.session.commit()
+      db.session.delete(at_risk_user)
+      db.session.commit()
+      return {'data': { 'id': 'at_risk_user', 'attributes': {'message': "at_risk_user with id {} successfully deleted".format(id)} } }, 200
+    else:
+      return {'data': { 'id': 'at_risk_user', 'attributes': {'error': "at_risk_user does not exist"} } }, 400  
+      
+      
+    
     
