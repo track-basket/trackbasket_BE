@@ -22,43 +22,47 @@ class Krogerservice:
     data = { 'grant_type':'client_credentials', 'scope': 'product.compact' }
     headers = {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': authorization}
     response = requests.post('https://api.kroger.com/v1/connect/oauth2/token', headers=headers, data=data).json()
-    global access_token 
+    global access_token
     access_token = response['access_token']
     return access_token
-  
+
   @classmethod
   def closest_store(cls, zipcode):
     token = Krogerservice.refresh_token()
     parameters = {'filter.zipCode.near': zipcode, 'filter.limit':1}
-    headers = {'Authorization': 'Bearer {}'.format(token)}  
+    headers = {'Authorization': 'Bearer {}'.format(token)}
     response = requests.get('https://api.kroger.com/v1/locations?', params=parameters, headers=headers)
+    # parsed_response = json.loads(response.text)
     parsed_response = response.json()
-#     return {'status code': response.status_code, 
-#             'response': response.text, 
-#             'content-type': response.headers.get('Content-Type'), 
+#     return {'status code': response.status_code,
+#             'response': response.text,
+#             'content-type': response.headers.get('Content-Type'),
 #             'token': token
 #            }
 
     if response.status_code != 200:
-      headers = {'Authorization': 'Bearer {}'.format(Krogerservice.refresh_token())}  
+      headers = {'Authorization': 'Bearer {}'.format(Krogerservice.refresh_token())}
       response = requests.get('https://api.kroger.com/v1/locations?', params=parameters, headers=headers)
       parsed_response = response.json()
 
-    return  {
-              'location_id': parsed_response['data'][0]['locationId'], 
-              'name': parsed_response['data'][0]['chain'], 
-              'address': parsed_response['data'][0]['address']['addressLine1'], 
-              'city': parsed_response['data'][0]['address']['city'], 
-              'state': parsed_response['data'][0]['address']['state'], 
-              'zipcode': parsed_response['data'][0]['address']['zipCode'],
-              'latitude': parsed_response['data'][0]['geolocation']['latitude'],
-              'longitude': parsed_response['data'][0]['geolocation']['longitude']            
-            }
-  
+    if parsed_response['data'] == []:
+      return  { 'error': 'no store found for this zipcode' }
+    else:
+      return  {
+                'location_id': parsed_response['data'][0]['locationId'],
+                'name': parsed_response['data'][0]['chain'],
+                'address': parsed_response['data'][0]['address']['addressLine1'],
+                'city': parsed_response['data'][0]['address']['city'],
+                'state': parsed_response['data'][0]['address']['state'],
+                'zipcode': parsed_response['data'][0]['address']['zipCode'],
+                'latitude': parsed_response['data'][0]['geolocation']['latitude'],
+                'longitude': parsed_response['data'][0]['geolocation']['longitude']
+              }
+
   @classmethod
   def item_search(cls, term, at_risk_user_id):
-    
-    user = AtRiskUser.find_by_id(at_risk_user_id) 
+
+    user = AtRiskUser.find_by_id(at_risk_user_id)
     nearest_store = user.store[0]
     nearest_store_id = nearest_store.location_id
     parameters = {'filter.term': term, 'filter.locationId': nearest_store_id}
@@ -66,24 +70,23 @@ class Krogerservice:
     response = requests.get('https://api.kroger.com/v1/products', params=parameters, headers=headers)
 
     json_items = response.json()['data']
-    
-    items = []   
-      
+
+    items = []
+
     for item in json_items:
       data = {}
-      
+
       data['name'] = item['description']
       data['productId'] = item['productId']
       data['upc'] = item['upc']
-      data['aisle_number'] = int(item['aisleLocations'][0]['number']) 
+      data['aisle_number'] = int(item['aisleLocations'][0]['number'])
       data['unit_price'] = item['items'][0]['price']['regular']
       for image in item['images']:
-        if image['perspective'] == 'front': 
-          for size in image['sizes']: 
+        if image['perspective'] == 'front':
+          for size in image['sizes']:
             if size['size'] == 'medium':
               data['image'] = size['url']
-              
+
       items.append(data)
-      
+
     return { 'data': { 'id': 'items', 'attributes':  items } }
-  

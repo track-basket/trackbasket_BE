@@ -18,11 +18,14 @@ class AtRiskUsers(Resource):
     if AtRiskUser.query.filter_by(at_risk_user_id=id).first() is None:
       at_risk_user = AtRiskUser(at_risk_user_id=id, **data)
       store_info = Krogerservice.closest_store(data['zipcode'])
-      store = Store(**store_info, at_risk_user=at_risk_user)
-      db.session.add(at_risk_user)
-      db.session.add(store)
-      db.session.commit()
-      return at_risk_user.json(), 201
+      if store_info == {'error': 'no store found for this zipcode'}:
+        return {'data': { 'id': 'at_risk_user', 'attributes': {'error': "No Kroger store match AtRiskUser zipcode"} } }, 400
+      else:  
+        store = Store(**store_info, at_risk_user=at_risk_user)
+        db.session.add(at_risk_user)
+        db.session.add(store)
+        db.session.commit()
+        return at_risk_user.json(), 201
     else:
       return {'data': { 'id': 'at_risk_user', 'attributes': {'error': "AtRiskUser already exists"} } }, 400
 
