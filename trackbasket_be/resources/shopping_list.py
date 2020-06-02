@@ -53,12 +53,13 @@ class ShoppingLists(Resource):
   def patch(self,id):
     request_data = request.json
     at_risk_user = AtRiskUser.query.filter_by(at_risk_user_id=id).first()
-    store = at_risk_user.store[0]
     if at_risk_user is None:
       return {'data': { 'id': 'shoppinglist', 'attributes': {'error': "At risk user #{} not found".format(id)} } }, 400
+    store = at_risk_user.store[0]
+    if at_risk_user.shopping_lists == []:
+        return {'data': { 'id': 'shoppinglist', 'attributes': {'error': "No shopping list associated with this user"} } }, 400
     else:
       shopping_list = at_risk_user.shopping_lists[-1]
-      
       shopping_list.status = request_data['status']
       db.session.commit()
       for item in shopping_list.items:
