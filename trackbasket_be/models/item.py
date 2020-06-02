@@ -17,11 +17,9 @@ class Item(BaseModel, db.Model):
   
   def json(self):
     return {
-      'name': self.name, 
       'description': self.description, 
       'unit_price': self.unit_price, 
       'image': self.image, 
-      'productId': self.productId, 
       'upc': self.upc, 
       'quantity': self.quantity,
       'aisle_number': self.aisle_number,

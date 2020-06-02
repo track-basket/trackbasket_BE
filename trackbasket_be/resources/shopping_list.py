@@ -16,6 +16,8 @@ class ShoppingLists(Resource):
     if at_risk_user is None:
       return {'data': { 'id': 'shoppinglist', 'attributes': {'error': "At risk user #{} not found".format(id)} } }, 400
     else:
+      if request_data["items"] == []:
+        return {'data': { 'id': 'shoppinglist', 'attributes': {'error': "Shopping List can not be empty"} } }, 400
       shopping_list = ShoppingList(at_risk_user_id=at_risk_user.id, status=request_data['status'], created_date=datetime.now())
       db.session.add(shopping_list)
       db.session.commit()
