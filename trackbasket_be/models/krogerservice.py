@@ -31,7 +31,7 @@ class Krogerservice:
     headers = {'Authorization': 'Bearer {}'.format(Krogerservice.return_token())}  
     response = requests.get('https://api.kroger.com/v1/locations?', params=parameters, headers=headers)
 #     parsed_response = response.json()
-    return {'response': response.text}
+    return json.loads(response.text)
 
     if response.status_code != 200:
       headers = {'Authorization': 'Bearer {}'.format(Krogerservice.refresh_token())}  
