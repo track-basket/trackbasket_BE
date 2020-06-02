@@ -34,16 +34,19 @@ class ShoppingLists(Resource):
     if at_risk_user is None:
       return {'data': { 'id': 'shoppinglist', 'attributes': {'error': "At risk user not found"} } }, 400
     else:
-      shopping_list = at_risk_user.shopping_lists[-1]
-      store = at_risk_user.store[0]
-      if store is None:
-        return {'data': { 'id': 'shoppinglist', 'attributes': {'error': "No store associated with this user"} } }, 400
+      if at_risk_user.shopping_lists == []:
+        return {'data': { 'id': 'shoppinglist', 'attributes': {'error': "No shopping list associated with this user"} } }, 400
       else:
-        return {'data': {  "id": "shoppinglist","attributes":
-            { "name": store.name, "address": store.address, "city": store.city, "state": store.state, "zipcode": store.zipcode,
-              "storeId": store.location_id, "latitude_longitude": [float(store.latitude), float(store.longitude)], "status": shopping_list.status,
-              "created_date": shopping_list.created_date.strftime("%d/%m/%Y %H:%M:%S"),
-              "items": [item.json() for item in shopping_list.items] } } }, 200
+        shopping_list = at_risk_user.shopping_lists[-1]
+        store = at_risk_user.store[0]
+        if store is None:
+          return {'data': { 'id': 'shoppinglist', 'attributes': {'error': "No store associated with this user"} } }, 400
+        else:
+          return {'data': {  "id": "shoppinglist","attributes":
+              { "name": store.name, "address": store.address, "city": store.city, "state": store.state, "zipcode": store.zipcode,
+                "storeId": store.location_id, "latitude_longitude": [float(store.latitude), float(store.longitude)], "status": shopping_list.status,
+                "created_date": shopping_list.created_date.strftime("%d/%m/%Y %H:%M:%S"),
+                "items": [item.json() for item in shopping_list.items] } } }, 200
 
   def patch(self,id):
     request_data = request.json
