@@ -66,27 +66,33 @@ class Krogerservice:
     nearest_store = user.store[0]
     nearest_store_id = nearest_store.location_id
     parameters = {'filter.term': term, 'filter.locationId': nearest_store_id}
+    if term == '':
+      return 'error'
+
     headers = {'Authorization': 'Bearer {}'.format(Krogerservice.return_token())}
     response = requests.get('https://api.kroger.com/v1/products', params=parameters, headers=headers)
 
-    json_items = response.json()['data']
+    if response.json()['data'] != []:
+      json_items = response.json()['data']
+      items = []
+      for item in json_items:
+        data = {}
+        data['description'] = item['description'] if 'description' in item.keys() else ''
+        data['upc'] = item['upc'] if 'upc' in item.keys() else ''
+        if ('aisleLocations' in item.keys()) and (item['aisleLocations'] != []):
+          data['aisle_number'] = int(item['aisleLocations'][0]['number'])
+        if ('price' in item['items'][0].keys()):
+          data['unit_price'] = item['items'][0]['price']['regular']
+        
+        if 'images' in item.keys():
+          for image in item['images']:
+            if ('perspective' in image.keys()):
+              if image['perspective'] == 'front':
+                for size in image['sizes']:
+                  if size['size'] == 'medium':
+                    data['image'] = size['url']
 
-    items = []
-
-    for item in json_items:
-      data = {}
-
-      data['name'] = item['description']
-      data['productId'] = item['productId']
-      data['upc'] = item['upc']
-      data['aisle_number'] = int(item['aisleLocations'][0]['number'])
-      data['unit_price'] = item['items'][0]['price']['regular']
-      for image in item['images']:
-        if image['perspective'] == 'front':
-          for size in image['sizes']:
-            if size['size'] == 'medium':
-              data['image'] = size['url']
-
-      items.append(data)
-
-    return { 'data': { 'id': 'items', 'attributes':  items } }
+        items.append(data)
+      return { 'data': { 'id': 'items', 'attributes':  items } }
+    else:
+      return 'error'
