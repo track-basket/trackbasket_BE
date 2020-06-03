@@ -1,9 +1,9 @@
 from flask_restful import Resource, reqparse, request 
-from models.at_risk_user import AtRiskUser
-from models.basemodel import BaseModel,db 
-from models.krogerservice import Krogerservice
-from models.store import Store
-from models.item import Item
+from ..models.at_risk_user import AtRiskUser
+from ..models.basemodel import BaseModel,db 
+from ..models.krogerservice import Krogerservice
+from ..models.store import Store
+from ..models.item import Item
 
 class AtRiskUsers(Resource):
   
