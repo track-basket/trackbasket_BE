@@ -64,10 +64,10 @@ class ShoppingLists(Resource):
       db.session.commit()
       for item in shopping_list.items:
         db.session.delete(item)
-      db.session.commit()
+        db.session.commit()
       for item in request_data["items"]:
         db.session.add(Item(shopping_list_id=shopping_list.id, **item)) 
-      db.session.commit()
+        db.session.commit()
       
       return {'data': {  "id": "shoppinglist","attributes":
             { "name": store.name, "address": store.address, "city": store.city, "state": store.state, "zipcode": store.zipcode,
@@ -86,7 +86,7 @@ class ShoppingLists(Resource):
       shopping_list = at_risk_user.shopping_lists[-1]
       for item in shopping_list.items:
         db.session.delete(item)
-      db.session.commit()
+        db.session.commit()
       db.session.delete(shopping_list)
       db.session.commit()
       return {'data': { 'id': 'shoppinglist', 'attributes': {'message': "The shopping list was deleted"} } }, 200
