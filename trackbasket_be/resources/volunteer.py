@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse, request
-from models.volunteer import Volunteer, db
+from models.volunteer import Volunteer
 from models.basemodel import BaseModel
 
 class Volunteers(Resource):
