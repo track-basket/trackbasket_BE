@@ -29,17 +29,12 @@ class Krogerservice:
   @classmethod
   def closest_store(cls, zipcode):
     token = Krogerservice.refresh_token()
-    parameters = {'filter.zipCode.near': zipcode, 'filter.limit':1}
+    number_results = 5
+    parameters = {'filter.zipCode.near': zipcode, 'filter.limit':number_results}
     headers = {'Authorization': 'Bearer {}'.format(token)}
     response = requests.get('https://api.kroger.com/v1/locations?', params=parameters, headers=headers)
     # parsed_response = json.loads(response.text)
     parsed_response = response.json()
-    
-#     return {'status code': response.status_code,
-#             'response': response.text,
-#             'content-type': response.headers.get('Content-Type'),
-#             'token': token
-#            }
 
     if response.status_code != 200:
       headers = {'Authorization': 'Bearer {}'.format(Krogerservice.refresh_token())}
@@ -48,17 +43,24 @@ class Krogerservice:
 
     if parsed_response['data'] == []:
       return  { 'error': 'no store found for this zipcode' }
-    else:
-      return  {
-                'location_id': parsed_response['data'][0]['locationId'],
-                'name': parsed_response['data'][0]['chain'],
-                'address': parsed_response['data'][0]['address']['addressLine1'],
-                'city': parsed_response['data'][0]['address']['city'],
-                'state': parsed_response['data'][0]['address']['state'],
-                'zipcode': parsed_response['data'][0]['address']['zipCode'],
-                'latitude': parsed_response['data'][0]['geolocation']['latitude'],
-                'longitude': parsed_response['data'][0]['geolocation']['longitude']
-              }
+
+    blacklist = ['shell company']
+    i = 0
+    while (parsed_response['data'][i]['name'].lower() in blacklist) and (i < number_results):
+      i += 1
+    if (parsed_response['data'][i]['name'] in blacklist):
+      return { 'error': 'no store found for this zipcode' }
+
+    return  {
+              'location_id': parsed_response['data'][i]['locationId'],
+              'name': parsed_response['data'][ i]['chain'],
+              'address': parsed_response['data'][i]['address']['addressLine1'],
+              'city': parsed_response['data'][i]['address']['city'],
+              'state': parsed_response['data'][i]['address']['state'],
+              'zipcode': parsed_response['data'][i]['address']['zipCode'],
+              'latitude': parsed_response['data'][i]['geolocation']['latitude'],
+              'longitude': parsed_response['data'][i]['geolocation']['longitude']
+            }
 
   @classmethod
   def item_search(cls, term, at_risk_user_id):
@@ -84,7 +86,7 @@ class Krogerservice:
           data['aisle_number'] = int(item['aisleLocations'][0]['number'])
         if ('price' in item['items'][0].keys()):
           data['unit_price'] = item['items'][0]['price']['regular']
-        
+
         if 'images' in item.keys():
           for image in item['images']:
             if ('perspective' in image.keys()):
