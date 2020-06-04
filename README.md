@@ -27,6 +27,7 @@ As the thread of COVID-19 rises, it's not safe for some people to leave their ho
 ### Built With
 
 * Frameworks: Flask
+* Language: Python 3.7
 * Deployment: Heroku
 * Database: PostgreSQL
 * Testing: UnitTest, Coverage
