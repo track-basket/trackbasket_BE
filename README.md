@@ -97,5 +97,7 @@ POST https://trackbasket.herokuapp.com/volunteer/<volunteer_id>
 * Alexis Dumortier - [GitHub](https://github.com/adumortier)<br>
 * Maria Ronauli - [GitHub](https://github.com/mronauli)<br>
 
+* Ed Stoner - [GitHub](https://github.com/edlsto)<br>
+* Cody Smith - [GitHub](https://github.com/monstaro)<br>
 
 Deployed Application on Heroku: [TrackBasket](https://trackbasket.herokuapp.com/)
