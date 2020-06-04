@@ -46,7 +46,7 @@ class Krogerservice:
 
     blacklist = ['shell company']
     i = 0
-    while (parsed_response['data'][i]['name'].lower() in blacklist) and (i < number_results):
+    while (parsed_response['data'][i]['name'].lower() in blacklist) and (i < number_results - 1):
       i += 1
     if (parsed_response['data'][i]['name'] in blacklist):
       return { 'error': 'no store found for this zipcode' }
