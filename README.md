@@ -9,7 +9,6 @@
   
 TrackBasket is a grocery-delivery app for volunteer shoppers who serve people whose mobility is limited during the pandemic. The purpose of the app is to allow at-risk consumers to create shopping lists by searching items available at a nearby store and to make these lists available to volunteers who can sort them and select the one they can fulfill.
 
-
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
 
@@ -91,15 +90,11 @@ POST https://trackbasket.herokuapp.com/volunteer/<volunteer_id>
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
 
-* [GrowStuff.org](https://www.growstuff.org/)
-* [Google Dev](https://console.developers.google.com/)
-* Gabz Cirbo for designing the GardenThat logo! 
 
 ## Developer GitHub Profiles
 
-* Paul Debevec - [GitHub](https://github.com/PaulDebevec) <br>
 * Alexis Dumortier - [GitHub](https://github.com/adumortier)<br>
-* Nathan Keller - [GitHub](https://github.com/nkeller1)<br>
-* Will Kunz - [GitHub](https://github.com/willkunz13)<br>
+* Maria Ronauli - [GitHub](https://github.com/mronauli)<br>
 
-Deployed Application on Heroku: [GardenThat!](https://gardenthat.herokuapp.com/)
+
+Deployed Application on Heroku: [TrackBasket](https://trackbasket.herokuapp.com/)
