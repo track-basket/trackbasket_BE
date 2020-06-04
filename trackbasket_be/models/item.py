@@ -1,4 +1,4 @@
-from models.basemodel import BaseModel, db
+from .basemodel import BaseModel, db
 import datetime 
 
 class Item(BaseModel, db.Model):
@@ -17,10 +17,10 @@ class Item(BaseModel, db.Model):
   
   def json(self):
     return {
-      'description': self.description, 
-      'unit_price': self.unit_price, 
-      'image': self.image, 
-      'upc': self.upc, 
-      'quantity': self.quantity,
-      'aisle_number': self.aisle_number,
+      "description": self.description, 
+      "unit_price": self.unit_price, 
+      "image": self.image, 
+      "upc": self.upc, 
+      "quantity": self.quantity,
+      "aisle_number": self.aisle_number,
     }

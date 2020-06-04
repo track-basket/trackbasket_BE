@@ -1,4 +1,4 @@
-from models.basemodel import BaseModel,db
+from .basemodel import BaseModel,db
 import datetime
 
 class Volunteer(BaseModel, db.Model):

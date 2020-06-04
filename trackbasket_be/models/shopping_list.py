@@ -1,5 +1,5 @@
-from models.basemodel import BaseModel, db
-from models.item import Item
+from .basemodel import BaseModel, db
+from .item import Item
 import datetime 
 
 class ShoppingList(BaseModel, db.Model):
