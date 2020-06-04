@@ -26,6 +26,7 @@ As the thread of COVID-19 rises, it's not safe for some people to leave their ho
 
 ### Built With
 
+Back end:
 * Frameworks: Flask
 * Language: Python 3.7
 * Deployment: Heroku
@@ -34,6 +35,15 @@ As the thread of COVID-19 rises, it's not safe for some people to leave their ho
 * Dependency Management: Poetry
 * Project Management: Github Project Board
 * External API: Kroger
+
+Front end:
+
+* React Native
+* React Navigation
+* React Hooks/Context API
+* Expo
+* React Native Testing Library
+* Jest
 
 ### Schema
 
