@@ -1,5 +1,7 @@
   
-<!-- PROJECT LOGO -->
+<p align="center">
+  <img width="500" height="300" src="file:///Users/mariaronauli/Downloads/IMG_1465.jpg">
+</p>
 <br />
 <p align="center">
   <a href="https://trackbasket.herokuapp.com/">
@@ -8,6 +10,9 @@
   <h1 align="center">Track Basket</h1> <br><br>
   
 TrackBasket is a grocery-delivery app for volunteer shoppers who serve people whose mobility is limited during the pandemic. The purpose of the app is to allow at-risk consumers to create shopping lists by searching items available at a nearby store and to make these lists available to volunteers who can sort them and select the one they can fulfill.
+<p align="center">
+<a href="http://g.recordit.co/Fq4vHJEapy.gif"><img src="http://g.recordit.co/Fq4vHJEapy.gif" width="500" height="500"/></a>
+</p>
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
@@ -80,7 +85,7 @@ python -m unittest discover
 
 ### Volunteer Endpoint
 
-Retrieve a volunteer profile information:
+Retrieve a volunteer's profile information:
 ```sh
 GET https://trackbasket.herokuapp.com/volunteer/<volunteer_id>
 ```
@@ -93,14 +98,52 @@ POST https://trackbasket.herokuapp.com/volunteer/<volunteer_id>
 
 ### AtRiskUser Endpoints
 
+Retrieve an at risk user's profile information:
+```sh
+GET https://trackbasket.herokuapp.com/atriskuser/<at_risk_user_id>
+```
+Create a new at risk user:
+```sh
+POST https://trackbasket.herokuapp.com/atriskuser/<at_risk_user_id>
+```
+Update an at risk user:
+```sh
+PATCH https://trackbasket.herokuapp.com/atriskuser/<at_risk_user_id>
+```
+Delete an at risk user:
+```sh
+DELETE https://trackbasket.herokuapp.com/atriskuser/<at_risk_user_id>
+```
+
 ### ShoppingList Endpoints
+
+Retrieve a shopping list's information:
+```sh
+GET https://trackbasket.herokuapp.com/shoppinglist/<at_risk_user_id>
+```
+Create a new shopping list:
+```sh
+POST https://trackbasket.herokuapp.com/shoppinglist/<at_risk_user_id>
+```
+Update a shopping list:
+```sh
+PATCH https://trackbasket.herokuapp.com/shoppinglist/<at_risk_user_id>
+```
+Delete an at risk user:
+```sh
+DELETE https://trackbasket.herokuapp.com/shoppinglist/<at_risk_user_id>
+```
 
 ### List of ShoppingLists Endpoint
 
-
+Retrieve all shopping lists' and its information:
+```sh
+GET https://trackbasket.herokuapp.com/listshoppinglists
+```
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
-
+* Alex Robinson (PM) - [GitHub](https://github.com/scottalexandra)<br>
+* Eric Weissman (PM) - [GitHub](https://github.com/ericweissman)<br>
 
 ## Developer GitHub Profiles
 
