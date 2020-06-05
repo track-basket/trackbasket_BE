@@ -1,7 +1,8 @@
   
 <p align="center">
-  <img width="500" height="300" src="file:///Users/mariaronauli/Downloads/IMG_1465.jpg">
+  <img width="500" height="300" src="https://user-images.githubusercontent.com/55954962/83821753-706c4f00-a68c-11ea-9c1b-2a2d24eddd94.jpg">
 </p>
+
 <br />
 <p align="center">
   <a href="https://trackbasket.herokuapp.com/">
