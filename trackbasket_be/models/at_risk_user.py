@@ -1,6 +1,6 @@
-from models.basemodel import BaseModel, db
-from models.store import Store
-from models.shopping_list import ShoppingList
+from .basemodel import BaseModel, db
+from .store import Store
+from .shopping_list import ShoppingList
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import backref
 import datetime 
