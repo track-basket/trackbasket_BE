@@ -148,4 +148,4 @@ GET https://trackbasket.herokuapp.com/listshoppinglists
 * Ed Stoner (Frontend) - [GitHub](https://github.com/edlsto)<br>
 * Cody Smith (Frontend) - [GitHub](https://github.com/monstaro)<br>
 
-Deployed Application on Heroku: [TrackBasket](https://trackbasket.herokuapp.com/)
+
