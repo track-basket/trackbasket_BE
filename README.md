@@ -8,7 +8,7 @@ TrackBasket is a grocery-delivery app for volunteer shoppers who serve people wh
 <p align="center">
 <a href="http://g.recordit.co/Fq4vHJEapy.gif"><img src="http://g.recordit.co/Fq4vHJEapy.gif" width="500" height="500"/></a>
 </p>
-
+<br><br>
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
 
