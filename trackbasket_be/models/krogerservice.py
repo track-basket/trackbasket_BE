@@ -37,7 +37,7 @@ class Krogerservice:
     response = requests.get('https://api.kroger.com/v1/locations?', params=parameters, headers=headers)
 #     parsed_response = json.loads(response.text)
     
-    parsed_response = response.json()
+ #   parsed_response = response.json()
 
     if response.status_code != 200:
       return  { 'error': 'there was a problem with the API respnse' }
