@@ -22,7 +22,8 @@ class Krogerservice:
     data = { 'grant_type':'client_credentials', 'scope': 'product.compact' }
     headers = {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': authorization}
     response = requests.post('https://api.kroger.com/v1/connect/oauth2/token', headers=headers, data=data).json()
-    global access_token
+    if response.status_code != 200:
+      return  { 'error': 'could not refresh token' }
     access_token = response['access_token']
     return access_token
 
