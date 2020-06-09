@@ -41,7 +41,7 @@ class Krogerservice:
       token = Krogerservice.refresh_token()
       headers = {'Authorization': 'Bearer {}'.format(Krogerservice.refresh_token())}
       response = requests.get('https://api.kroger.com/v1/locations?', params=parameters, headers=headers)
-    return {'response': response.text, 'status_code': response.status_code, token: token }  
+    return {'response': response.text, 'status_code': response.status_code, 'token': token }  
 #     parsed_response = response.json()
 
     if parsed_response['data'] == []:
