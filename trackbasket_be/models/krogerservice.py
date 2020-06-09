@@ -21,10 +21,11 @@ class Krogerservice:
     authorization = 'Basic {}'.format(client)
     data = { 'grant_type':'client_credentials', 'scope': 'product.compact' }
     headers = {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': authorization}
-    response = requests.post('https://api.kroger.com/v1/connect/oauth2/token', headers=headers, data=data).json()
+    response = requests.post('https://api.kroger.com/v1/connect/oauth2/token', headers=headers, data=data)
+    parsed_response = response.json()
     if response.status_code != 200:
       return  { 'error': 'could not refresh token' }
-    access_token = response['access_token']
+    access_token = parsed_response['access_token']
     return access_token
 
   @classmethod
