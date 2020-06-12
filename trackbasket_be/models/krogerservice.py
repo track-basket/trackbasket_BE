@@ -34,7 +34,9 @@ class Krogerservice:
     number_results = 5
     parameters = {'filter.zipCode.near': zipcode, 'filter.limit':number_results}
     headers = {'Authorization': 'Bearer {}'.format(token)}
-    response = requests.get('https://api.kroger.com/v1/locations?', params=parameters, headers=headers)
+    response = requests.get('https://api.kroger.com/supportinfo')
+    return {'response': response.text}
+#     response = requests.get('https://api.kroger.com/v1/locations?', params=parameters, headers=headers)
 #     parsed_response = json.loads(response.text)
     
  #   parsed_response = response.json()
