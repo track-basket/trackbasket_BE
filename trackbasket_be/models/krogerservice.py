@@ -39,7 +39,7 @@ class Krogerservice:
 #     parsed_response = json.loads(response.text)
     
  #   parsed_response = response.json()
-    return {'response': response.text, 'status_code': response.status_code, 'token': token, 'content_type': response.headers['Content-Type'] }  
+    return {'response': response.text, 'response1': response1.text, 'status_code': response.status_code, 'token': token, 'content_type': response.headers['Content-Type'] }  
     if response.status_code != 200:
       return  { 'error': 'there was a problem with the API respnse' }
 #       token = Krogerservice.refresh_token()
