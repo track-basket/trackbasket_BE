@@ -9,6 +9,7 @@ TrackBasket is a grocery-delivery app for volunteer shoppers who serve people wh
 <a href="http://g.recordit.co/Fq4vHJEapy.gif"><img src="http://g.recordit.co/Fq4vHJEapy.gif" width="500" height="500"/></a>
 </p>
 <br><br>
+
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
 
@@ -124,7 +125,7 @@ Update a shopping list:
 ```sh
 PATCH https://trackbasket.herokuapp.com/shoppinglist/<at_risk_user_id>
 ```
-Delete an at risk user:
+Delete shopping list:
 ```sh
 DELETE https://trackbasket.herokuapp.com/shoppinglist/<at_risk_user_id>
 ```
