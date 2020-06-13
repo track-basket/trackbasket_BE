@@ -1,9 +1,9 @@
 from flask_restful import Resource, reqparse, request
-from models.basemodel import BaseModel, db
-from models.krogerservice import Krogerservice
-from models.shopping_list import ShoppingList
-from models.at_risk_user import AtRiskUser
-from models.item import Item
+from ..models.basemodel import BaseModel, db
+from ..models.krogerservice import Krogerservice
+from ..models.shopping_list import ShoppingList
+from ..models.at_risk_user import AtRiskUser
+from ..models.item import Item
 from datetime import datetime
 import requests
 

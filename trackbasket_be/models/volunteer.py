@@ -1,4 +1,4 @@
-from models.basemodel import BaseModel
+from .basemodel import BaseModel
 from trackbasket_be import db
 # from models.basemodel import db
 import datetime
