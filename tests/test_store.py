@@ -9,7 +9,7 @@ class TestStore(unittest.TestCase):
     self.app = create_app('testing')
     self.test_app = self.app.test_client()
     with self.app.app_context():
-        db.create_all()
+      db.create_all()
     self.store = Store(name='store1', location_id='9820340237', address= '12 Elm Street', city= 'Cambridge', state= 'MA', zipcode= '02139', latitude= '1234', longitude= '4321')
   
   def tearDown(self):
@@ -31,6 +31,7 @@ class TestStore(unittest.TestCase):
   #   response = self.test_app.get('/store/1234', json={'zipcode': '80012' })
   #   self.assertEqual(response.status_code, 200)
   #   payload = json.loads(response.data)
+    
   #   self.assertEqual(payload['location_id'], '62000010')
   #   self.assertEqual(payload['name'], 'KINGSOOPERS')
   #   self.assertEqual(payload['address'], '15250 E Mississippi Ave')
