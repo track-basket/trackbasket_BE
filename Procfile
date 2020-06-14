@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath trackbasket_be app:app
+web: gunicorn run:app

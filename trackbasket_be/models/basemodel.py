@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from trackbasket_be import db
+# db = SQLAlchemy()
 
 class BaseModel(db.Model):
   """Base data model for all objects"""
