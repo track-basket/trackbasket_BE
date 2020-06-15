@@ -27,19 +27,19 @@ class TestStore(unittest.TestCase):
     self.assertEqual(self.store.latitude, '1234')
     self.assertEqual(self.store.longitude, '4321')
 
-  # def test_read_store(self):
-  #   response = self.test_app.get('/store/1234', json={'zipcode': '80012' })
-  #   self.assertEqual(response.status_code, 200)
-  #   payload = json.loads(response.data)
+  def test_read_store(self):
+    response = self.test_app.get('/store/1234', json={'zipcode': '80012' })
+    self.assertEqual(response.status_code, 200)
+    payload = json.loads(response.data)
     
-  #   self.assertEqual(payload['location_id'], '62000010')
-  #   self.assertEqual(payload['name'], 'KINGSOOPERS')
-  #   self.assertEqual(payload['address'], '15250 E Mississippi Ave')
-  #   self.assertEqual(payload['city'], 'Aurora')
-  #   self.assertEqual(payload['state'], 'CO')
-  #   self.assertEqual(payload['zipcode'], '80012')
-  #   self.assertEqual(payload['latitude'], 39.6951161)
-  #   self.assertEqual(payload['longitude'], -104.8109163)
+    self.assertEqual(payload['location_id'], '62000010')
+    self.assertEqual(payload['name'], 'KINGSOOPERS')
+    self.assertEqual(payload['address'], '15250 E Mississippi Ave')
+    self.assertEqual(payload['city'], 'Aurora')
+    self.assertEqual(payload['state'], 'CO')
+    self.assertEqual(payload['zipcode'], '80012')
+    self.assertEqual(payload['latitude'], 39.6951161)
+    self.assertEqual(payload['longitude'], -104.8109163)
 
 if __name__ == '__main__':
     unittest.main()
