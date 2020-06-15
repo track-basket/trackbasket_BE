@@ -27,7 +27,7 @@ class TestAtRiskUser(unittest.TestCase):
 
   def test_create_at_risk_user(self):
     self.test_app.delete('/atriskuser/4321')
-    response = self.test_app.post('/atriskuser/4321', json={ "name": "Alexis", "address": "125 ocean ave", "city": "Denver", "state": "ca", "zipcode": "91763", "phone_number": "123-456-7890"})
+    response = self.test_app.post('/atriskuser/4321', json={ "name": "Alexis", "address": "125 ocean ave", "city": "Denver", "state": "ca", "zipcode": "80203", "phone_number": "123-456-7890"})
     payload = json.loads(response.data)
     self.assertEqual(response.status_code, 201)
     self.assertEqual(payload['data']['attributes']['name'], 'Alexis')
@@ -35,17 +35,17 @@ class TestAtRiskUser(unittest.TestCase):
     self.assertEqual(payload['data']['attributes']['address'], '125 ocean ave')
     self.assertEqual(payload['data']['attributes']['city'], 'Denver')
     self.assertEqual(payload['data']['attributes']['state'], 'ca')
-    self.assertEqual(payload['data']['attributes']['zip code'], '91763')
+    self.assertEqual(payload['data']['attributes']['zip code'], '80203')
     self.assertEqual(payload['data']['attributes']['phone number'], '123-456-7890')
 
-    response = self.test_app.post('/atriskuser/4321', json={ "name": "Alexis", "address": "125 ocean ave", "city": "Denver", "state": "ca", "zipcode": "91763", "phone_number": "123-456-7890"})
+    response = self.test_app.post('/atriskuser/4321', json={ "name": "Alexis", "address": "125 ocean ave", "city": "Denver", "state": "ca", "zipcode": "80203", "phone_number": "123-456-7890"})
     self.assertEqual(response.status_code, 400)
     payload = json.loads(response.data)
     self.assertEqual(payload['data']['attributes']['error'],"AtRiskUser already exists")
 
   def test_read_at_risk_user(self):
     self.test_app.delete('/atriskuser/4321')
-    self.test_app.post('/atriskuser/4321', json={ "name": "Alexis", "address": "125 ocean ave", "city": "Denver", "state": "ca", "zipcode": "91763", "phone_number": "123-456-7890"})
+    self.test_app.post('/atriskuser/4321', json={ "name": "Alexis", "address": "125 ocean ave", "city": "Denver", "state": "ca", "zipcode": "80203", "phone_number": "123-456-7890"})
     response = self.test_app.get('/atriskuser/4321')
     self.assertEqual(response.status_code, 200)
     payload = json.loads(response.data)
@@ -54,14 +54,14 @@ class TestAtRiskUser(unittest.TestCase):
     self.assertEqual(payload['data']['attributes']['address'], '125 ocean ave')
     self.assertEqual(payload['data']['attributes']['city'], 'Denver')
     self.assertEqual(payload['data']['attributes']['state'], 'ca')
-    self.assertEqual(payload['data']['attributes']['zip code'], '91763')
+    self.assertEqual(payload['data']['attributes']['zip code'], '80203')
     self.assertEqual(payload['data']['attributes']['phone number'], '123-456-7890')
       
   def test_update_at_risk_user(self):
     self.test_app.delete('/atriskuser/4321')
-    self.test_app.post('/atriskuser/4321', json={ "name": "Alexis", "address": "125 ocean ave", "city": "Denver", "state": "ca", "zipcode": "91763", "phone_number": "123-456-7890"})
+    self.test_app.post('/atriskuser/4321', json={ "name": "Alexis", "address": "125 ocean ave", "city": "Denver", "state": "ca", "zipcode": "80203", "phone_number": "123-456-7890"})
       
-    response = self.test_app.patch('/atriskuser/4321', json={ "name": "Mike", "address": "126 ocean ave", "city": "New York", "state": "NY", "zipcode": "84920", "phone_number": "124-456-7890"})
+    response = self.test_app.patch('/atriskuser/4321', json={ "name": "Mike", "address": "126 ocean ave", "city": "New York", "state": "NY", "zipcode": "80203", "phone_number": "124-456-7890"})
 
     self.assertEqual(response.status_code, 200)
     payload = json.loads(response.data)
@@ -70,7 +70,7 @@ class TestAtRiskUser(unittest.TestCase):
     self.assertEqual(payload['data']['attributes']['address'], '126 ocean ave')
     self.assertEqual(payload['data']['attributes']['city'], 'New York')
     self.assertEqual(payload['data']['attributes']['state'], 'NY')
-    self.assertEqual(payload['data']['attributes']['zip code'], '84920')
+    self.assertEqual(payload['data']['attributes']['zip code'], '80203')
     self.assertEqual(payload['data']['attributes']['phone number'], '124-456-7890')
     self.test_app.delete('/atriskuser/4321')
     response = self.test_app.patch('/atriskuser/55553', json={ "name": "Mike", "address": "126 ocean ave", "city": "New York", "state": "NY", "zipcode": "84920", "phone_number": "124-456-7890"})
@@ -79,7 +79,7 @@ class TestAtRiskUser(unittest.TestCase):
     self.assertEqual(payload['data']['attributes']['error'], 'User not found')
 
   def test_delete_at_risk_user(self):
-    self.test_app.post('/atriskuser/4321', json={ "name": "Alexis", "address": "125 ocean ave", "city": "Denver", "state": "ca", "zipcode": "91763", "phone_number": "123-456-7890"})
+    self.test_app.post('/atriskuser/4321', json={ "name": "Alexis", "address": "125 ocean ave", "city": "Denver", "state": "ca", "zipcode": "80203", "phone_number": "123-456-7890"})
     response = self.test_app.delete('/atriskuser/4321')
     self.assertEqual(response.status_code, 200)
     payload = json.loads(response.data)

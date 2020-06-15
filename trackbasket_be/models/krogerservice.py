@@ -47,7 +47,7 @@ class Krogerservice:
 #       response = requests.get('https://api.kroger.com/v1/locations?', params=parameters, headers=headers)
     # return {'response': response.text, 'response1': response1.text, 'status_code': response.status_code, 'token': token, 'content_type': response.headers['Content-Type'] }  
     parsed_response = response.json()
-
+    
     if parsed_response['data'] == []:
       return  { 'error': 'no store found for this zipcode' }
 
@@ -55,7 +55,9 @@ class Krogerservice:
     i = 0
     while (parsed_response['data'][i]['name'].lower() in blacklist) and (i < number_results - 1):
       i += 1
-    if (parsed_response['data'][i]['name'] in blacklist):
+    
+    
+    if (parsed_response['data'][i]['name'].lower() in blacklist):
       return { 'error': 'no store found for this zipcode' }
 
     return  {
