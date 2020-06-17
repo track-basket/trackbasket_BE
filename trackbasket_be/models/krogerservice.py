@@ -4,6 +4,11 @@ import requests
 import os
 import json
 
+proxyDict = {
+              "http"  : os.environ.get('FIXIE_URL', ''),
+              "https" : os.environ.get('FIXIE_URL', '')
+            }
+
 class Krogerservice:
 
   @classmethod
@@ -35,7 +40,7 @@ class Krogerservice:
     parameters = {'filter.zipCode.near': zipcode, 'filter.limit':number_results}
     headers = {'Authorization': 'Bearer {}'.format(token)}
     # response1 = requests.get('https://api.kroger.com/supportinfo')
-    response = requests.get('https://api.kroger.com/v1/locations?', params=parameters, headers=headers)
+    response = requests.get('https://api.kroger.com/v1/locations?', params=parameters, headers=headers, proxies=proxyDict)
 #     parsed_response = json.loads(response.text)
     
  #   parsed_response = response.json()
@@ -82,7 +87,7 @@ class Krogerservice:
       return 'error'
 
     headers = {'Authorization': 'Bearer {}'.format(Krogerservice.return_token())}
-    response = requests.get('https://api.kroger.com/v1/products', params=parameters, headers=headers)
+    response = requests.get('https://api.kroger.com/v1/products', params=parameters, headers=headers, proxies=proxyDict)
 
     if response.json()['data'] != []:
       json_items = response.json()['data']
