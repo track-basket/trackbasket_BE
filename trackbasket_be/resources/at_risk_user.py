@@ -11,57 +11,33 @@ class AtRiskUsers(Resource):
     at_risk_user = AtRiskUser.find_by_id(id)
     if at_risk_user:
       return at_risk_user.json(), 200
-    else: 
-      return {'data': { 'id': 'at_risk_user', 'attributes': {'error': "User not found"} } }, 400
+    return {'data': { 'id': 'at_risk_user', 'attributes': {'error': 'User not found'} } }, 400
   
   def post(self, id):
     data = request.json
-    if AtRiskUser.query.filter_by(at_risk_user_id=id).first() is None:
-      at_risk_user = AtRiskUser(at_risk_user_id=id, **data)
-      store_info = Krogerservice.closest_store(data['zipcode'])
-      if store_info == {'error': 'no store found for this zipcode'}:
-        return {'data': { 'id': 'at_risk_user', 'attributes': {'error': "No Kroger store match AtRiskUser zipcode"} } }, 400
-      else:  
-        store = Store(**store_info, at_risk_user=at_risk_user)
-        db.session.add(at_risk_user)
-        db.session.add(store)
-        db.session.commit()
-        return at_risk_user.json(), 201
-    else:
-      return {'data': { 'id': 'at_risk_user', 'attributes': {'error': "AtRiskUser already exists"} } }, 400
+    if AtRiskUser.find_by_id(id):
+      return {'data': { 'id': 'at_risk_user', 'attributes': {'error': 'AtRiskUser already exists'} } }, 400
+    at_risk_user = AtRiskUser(at_risk_user_id=id, **data)
+    store_info = Krogerservice.closest_store(data['zipcode'])
+    if store_info == {'error': 'no store found for this zipcode'}:
+      return {'data': { 'id': 'at_risk_user', 'attributes': {'error': 'No Kroger store match AtRiskUser zipcode'} } }, 400
+    at_risk_user.save(store_info)
+    return at_risk_user.json(), 201
 
   def patch(self, id):
     data = request.json 
     at_risk_user = AtRiskUser.find_by_id(id)
-    
-    if at_risk_user:
-      at_risk_user.name = data['name']
-      at_risk_user.address = data['address']
-      at_risk_user.city = data['city']
-      at_risk_user.state = data['state']
-      at_risk_user.zipcode = data['zipcode']
-      at_risk_user.phone_number = data['phone_number']
-    else: 
-      return {'data': { 'id': 'at_risk_user', 'attributes': {'error': "User not found"} } }, 400
+    if at_risk_user is None:
+      return {'data': { 'id': 'at_risk_user', 'attributes': {'error': 'User not found'} } }, 400
+    at_risk_user.set_attrs(name = data['name'], address = data['address'], 
+    city = data['city'], state = data['state'], zipcode = data['zipcode'], phone_number = data['phone_number'])
     db.session.commit()
     return at_risk_user.json(), 200
   
   def delete(self, id):
-    at_risk_user = db.session.query(AtRiskUser).filter_by(at_risk_user_id=id).first()
-    if at_risk_user:
-      for lst in at_risk_user.shopping_lists:
-        if lst.items != None:
-          for item in lst.items:
-            db.session.delete(item) 
-            db.session.commit()
-        db.session.delete(lst) 
-        db.session.commit()
-      db.session.delete(at_risk_user)
-      db.session.commit()
-      return {'data': { 'id': 'at_risk_user', 'attributes': {'message': "at_risk_user with id {} successfully deleted".format(id)} } }, 200
-    else:
-      return {'data': { 'id': 'at_risk_user', 'attributes': {'error': "at_risk_user does not exist"} } }, 400  
-      
-      
-    
-    
+    at_risk_user = AtRiskUser.find_by_id(id)
+    if at_risk_user is None:
+      return {'data': { 'id': 'at_risk_user', 'attributes': {'error': 'at_risk_user does not exist'} } }, 400
+    at_risk_user.delete_shoppinglists()
+    at_risk_user.delete()
+    return {'data': { 'id': 'at_risk_user', 'attributes': {'message': 'at_risk_user with id {} successfully deleted'.format(id)} } }, 200
