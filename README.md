@@ -85,10 +85,62 @@ Retrieve a volunteer's profile information:
 ```sh
 GET https://trackbasket.herokuapp.com/volunteer/<volunteer_id>
 ```
+Expected response:
+```sh
+{
+    "data": {
+        "id": "volunteer",
+        "attributes": {
+           	 	"id": "test76687",
+            	"name": "my test user",
+              "phone number": "719 342 3242"
+        }
+    }
+}
+
+```
+
 Create a new volunteer:
 
 ```sh
 POST https://trackbasket.herokuapp.com/volunteer/<volunteer_id>
+{
+     "name": "my test user",
+     "phone_number": "719 342 3242"
+}
+
+```
+
+Expected response:
+```sh
+{
+    "volunteer": {
+        "name": "my test user",
+        "phone_number": "719 342 3242"
+    }
+}
+```
+
+Update a volunteer:
+```sh
+PATCH	 https://trackbasket.herokuapp.com/volunteer/<volunteer_id>
+{
+	     "name": "Bob Doe",
+	     "phone_number": "719 342 3249"
+}
+```
+Expected response:
+```sh
+{
+    "data": {
+        		"id": "volunteer",
+        		"attributes": {
+            			"id": "test76687",
+           			  "name": "Bob Doe",
+           			  "phone number": "719 342 3249"
+        			}
+    		}
+}
 
 ```
 
