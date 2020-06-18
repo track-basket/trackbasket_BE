@@ -91,9 +91,9 @@ Expected response:
     "data": {
         "id": "volunteer",
         "attributes": {
-           	 	"id": "test76687",
+           	"id": "test76687",
             	"name": "my test user",
-              "phone number": "719 342 3242"
+              	"phone number": "719 342 3242"
         }
     }
 }
@@ -130,16 +130,17 @@ PATCH	 https://trackbasket.herokuapp.com/volunteer/<volunteer_id>
 }
 ```
 Expected response:
+
 ```sh
 {
     "data": {
-        		"id": "volunteer",
-        		"attributes": {
-            			"id": "test76687",
-           			  "name": "Bob Doe",
-           			  "phone number": "719 342 3249"
-        			}
-    		}
+        "id": "volunteer",
+        "attributes": {
+           	"id": "test76687",
+            	"name": "Bob Doe",
+              	"phone number": "719 342 3249"
+        }
+    }
 }
 
 ```
