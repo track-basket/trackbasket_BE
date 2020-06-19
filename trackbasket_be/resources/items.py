@@ -7,10 +7,7 @@ class Items(Resource):
   
   def get(self):
     params = request.args.to_dict()
-    at_risk_user_id = params['at_risk_user_id']
-    term = params['product']
-    items = Krogerservice.item_search(term, at_risk_user_id)
-    if  items == 'error':
-       return {'data': { 'id': 'items', 'attributes': {'error': 'Item not found'} } }, 400
-    else:
-      return items, 200
+    items = Krogerservice.item_search(params['product'], params['at_risk_user_id'])
+    if items == 'error':
+      return {'data': { 'id': 'items', 'attributes': {'error': 'Item not found'} } }, 400
+    return items, 200

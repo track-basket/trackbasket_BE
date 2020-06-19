@@ -1,6 +1,7 @@
 from .basemodel import BaseModel, db
 from .store import Store
 from .shopping_list import ShoppingList
+from .store import Store
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import backref
 import datetime 
@@ -24,8 +25,27 @@ class AtRiskUser(BaseModel, db.Model):
   @classmethod 
   def find_by_id(cls, id):
     return cls.query.filter_by(at_risk_user_id=id).first()
-  
-  def save_to_db(self):
+
+  def save(self, store_info):
+    store = Store(**store_info, at_risk_user=self)
     db.session.add(self)
+    db.session.add(store)
+    db.session.commit()    
+
+  def set_attrs(self, **kwargs):
+    for k,v in kwargs.items():
+        setattr(self, k, v)
+
+  def delete_shoppinglists(self):
+    for lst in self.shopping_lists:
+        if lst.items != None:
+          for item in lst.items:
+            db.session.delete(item) 
+            db.session.commit()
+        db.session.delete(lst) 
+        db.session.commit()
+  
+  def delete(self):
+    db.session.delete(self)
     db.session.commit()
     

@@ -29,7 +29,6 @@ class ShoppingLists(Resource):
               "storeId": store.location_id, "latitude_longitude": [float(store.latitude), float(store.longitude)], "status": shopping_list.status,
               "created_date": shopping_list.created_date.strftime("%d/%m/%Y %H:%M:%S"),
               "items": [item.json() for item in shopping_list.items] } } }, 200
-      # return {'message': 'new shopping list created for user #{}'.format(id)}, 200
 
   def get(self,id):
     at_risk_user = AtRiskUser.query.filter_by(at_risk_user_id=id).first()
