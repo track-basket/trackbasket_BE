@@ -34,7 +34,7 @@ class AtRiskUser(BaseModel, db.Model):
 
   def set_attrs(self, **kwargs):
     for k,v in kwargs.items():
-        setattr(self, k, v)
+      setattr(self, k, v)
 
   def delete_shoppinglists(self):
     for lst in self.shopping_lists:
@@ -48,4 +48,9 @@ class AtRiskUser(BaseModel, db.Model):
   def delete(self):
     db.session.delete(self)
     db.session.commit()
-    
+  
+  def return_store(self):
+    return self.store[0]
+
+  def return_shopping_list(self):
+    return self.shopping_lists[-1]
