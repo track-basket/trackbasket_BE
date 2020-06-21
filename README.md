@@ -191,15 +191,14 @@ GET https://trackbasket.herokuapp.com/listshoppinglists
 ```
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
-* Alex Robinson (PM) - [GitHub](https://github.com/scottalexandra)<br>
-* Eric Weissman (PM) - [GitHub](https://github.com/ericweissman)<br>
+* Alex Robinson (PM) - [GitHub](https://github.com/scottalexandra)
+* Eric Weissman (PM) - [GitHub](https://github.com/ericweissman)
 
 ## Developer GitHub Profiles
 
-* Alexis Dumortier (Backend) - [GitHub](https://github.com/adumortier)<br>
-* Maria Ronauli (Backend) - [GitHub](https://github.com/mronauli)<br>
-
-* Ed Stoner (Frontend) - [GitHub](https://github.com/edlsto)<br>
-* Cody Smith (Frontend) - [GitHub](https://github.com/monstaro)<br>
+* Alexis Dumortier (Backend) - [GitHub](https://github.com/adumortier)
+* Maria Ronauli (Backend) - [GitHub](https://github.com/mronauli)
+* Ed Stoner (Frontend) - [GitHub](https://github.com/edlsto)
+* Cody Smith (Frontend) - [GitHub](https://github.com/monstaro)
 
 
