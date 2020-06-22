@@ -10,6 +10,7 @@ import requests
 class ListShoppingLists(Resource):
 
   def get(self):
+    
     lists = ShoppingList.query.filter_by(status="pending").all()
     lists_info = []
 
