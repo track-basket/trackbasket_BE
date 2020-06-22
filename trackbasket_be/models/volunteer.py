@@ -19,7 +19,7 @@ class Volunteer(BaseModel, db.Model):
   
   def set_attrs(self, **kwargs):
     for k,v in kwargs.items():
-        setattr(self, k, v)
+      setattr(self, k, v)
 
   def save(self):
     db.session.add(self)

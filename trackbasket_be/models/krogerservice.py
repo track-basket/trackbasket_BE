@@ -1,115 +1,117 @@
 from flask_restful import Resource, reqparse, request
 from .at_risk_user import AtRiskUser
-import requests
-import os
-import json
+import requests, os, json
 
-proxyDict = {
-              "http"  : os.environ.get('FIXIE_URL', ''),
-              "https" : os.environ.get('FIXIE_URL', '')
-            }
+proxyDict = { "http"  : os.environ.get('FIXIE_URL', ''), "https" : os.environ.get('FIXIE_URL', '') }
 
 class Krogerservice:
 
   @classmethod
-  def return_token(cls):
+  def closest_store(cls, zipcode):
+    response  = cls.__store_api_request(zipcode)
+    store = cls.__extract_kroger_store(response)
+    if store is None:
+      return { 'error': 'no store found for this zipcode' }
+    return  { 'location_id': store['locationId'], 'name': store['chain'],'address': store['address']['addressLine1'],
+            'city': store['address']['city'],'state': store['address']['state'], 'zipcode': store['address']['zipCode'],
+            'latitude': store['geolocation']['latitude'],'longitude': store['geolocation']['longitude'] }
+  
+  @classmethod
+  def item_search(cls, term, at_risk_user_id):
+    nearest_store_id = cls.__get_store_id(at_risk_user_id)
+    if term == '':
+      return 'error'
+    json_items = cls.__item_api_request(term, nearest_store_id)
+    if json_items == []:
+      return 'error'
+    items = cls.__extract_items(json_items)
+    return { 'data': { 'id': 'items', 'attributes':  items } }
+
+  @classmethod
+  def __return_token(cls):
     try:
       access_token
     except NameError:
-      return Krogerservice.refresh_token()
+      return cls.__refresh_token()
     else:
       return access_token
 
   @classmethod
-  def refresh_token(cls):
-    client = os.environ.get("CLIENT")
-    authorization = 'Basic {}'.format(client)
-    data = { 'grant_type':'client_credentials', 'scope': 'product.compact' }
-    headers = {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': authorization}
-    response = requests.post('https://api.kroger.com/v1/connect/oauth2/token', headers=headers, data=data)
-    parsed_response = response.json()
-    if response.status_code != 200:
-      return  { 'error': 'could not refresh token' }
-    access_token = parsed_response['access_token']
+  def __refresh_token(cls):
+    global access_token  
+    response = cls.__token_api_request()
+    access_token = response.json()['access_token']
     return access_token
 
   @classmethod
-  def closest_store(cls, zipcode):
-    token = Krogerservice.refresh_token()
-    number_results = 5
+  def __find_image(cls, item):
+    if 'images' in item.keys():
+      for image in item['images']:
+        if (('perspective' in image.keys()) and image['perspective'] == 'front'):
+          return next((size['url'] for size in image['sizes'] if size['size'] == 'medium'), None)
+  
+  @classmethod
+  def __format_item(cls, item):
+    data = {}
+    data['description'] = item['description'] if 'description' in item.keys() else ''
+    data['upc'] = item['upc'] if 'upc' in item.keys() else ''
+    if ('aisleLocations' in item.keys()) and (item['aisleLocations'] != []):
+      data['aisle_number'] = int(item['aisleLocations'][0]['number'])
+    if ('price' in item['items'][0].keys()):
+      data['unit_price'] = item['items'][0]['price']['regular']
+    image = cls.__find_image(item)  
+    if image is not None:
+      data['image'] = image
+    return data
+  
+  @classmethod
+  def __extract_items(cls, json_items):
+    items = []
+    for item in json_items:
+      formatted_item = cls.__format_item(item)  
+      items.append(formatted_item)
+    return items
+  
+  @classmethod
+  def __store_api_request(cls, zipcode):
+    token = cls.__return_token()
+    number_results = 5 
     parameters = {'filter.zipCode.near': zipcode, 'filter.limit':number_results}
     headers = {'Authorization': 'Bearer {}'.format(token)}
-    # response1 = requests.get('https://api.kroger.com/supportinfo')
     response = requests.get('https://api.kroger.com/v1/locations?', params=parameters, headers=headers, proxies=proxyDict)
-#     parsed_response = json.loads(response.text)
-    
- #   parsed_response = response.json()
-    # return {'response': response.text, 'response1': response1.text, 'status_code': response.status_code, 'token': token, 'content_type': response.headers['Content-Type'] }  
     if response.status_code != 200:
-      return  { 'error': 'there was a problem with the API respnse' }
-#       token = Krogerservice.refresh_token()
-#       headers = {'Authorization': 'Bearer {}'.format(Krogerservice.refresh_token())}
-#       response = requests.get('https://api.kroger.com/v1/locations?', params=parameters, headers=headers)
-    # return {'response': response.text, 'response1': response1.text, 'status_code': response.status_code, 'token': token, 'content_type': response.headers['Content-Type'] }  
-    parsed_response = response.json()
-    
-    if parsed_response['data'] == []:
-      return  { 'error': 'no store found for this zipcode' }
-
-    blacklist = ['shell company']
-    i = 0
-    while (parsed_response['data'][i]['name'].lower() in blacklist) and (i < number_results - 1):
-      i += 1
-    
-    
-    if (parsed_response['data'][i]['name'].lower() in blacklist):
-      return { 'error': 'no store found for this zipcode' }
-
-    return  {
-              'location_id': parsed_response['data'][i]['locationId'],
-              'name': parsed_response['data'][ i]['chain'],
-              'address': parsed_response['data'][i]['address']['addressLine1'],
-              'city': parsed_response['data'][i]['address']['city'],
-              'state': parsed_response['data'][i]['address']['state'],
-              'zipcode': parsed_response['data'][i]['address']['zipCode'],
-              'latitude': parsed_response['data'][i]['geolocation']['latitude'],
-              'longitude': parsed_response['data'][i]['geolocation']['longitude']
-            }
+      headers = {'Authorization': 'Bearer {}'.format(cls.__refresh_token())}
+      response = requests.get('https://api.kroger.com/v1/locations?', params=parameters, headers=headers, proxies=proxyDict)
+    return response
 
   @classmethod
-  def item_search(cls, term, at_risk_user_id):
+  def __token_api_request(cls):
+    authorization = 'Basic {}'.format(os.environ.get("CLIENT"))
+    data = { 'grant_type':'client_credentials', 'scope': 'product.compact' }
+    headers = {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': authorization}
+    return requests.post('https://api.kroger.com/v1/connect/oauth2/token', headers=headers, data=data)
 
+  @classmethod
+  def __item_api_request(cls, term, nearest_store_id):
+    token = cls.__return_token()
+    parameters = {'filter.term': term, 'filter.locationId': nearest_store_id}
+    headers = {'Authorization': 'Bearer {}'.format(token)}
+    response = requests.get('https://api.kroger.com/v1/products', params=parameters, headers=headers, proxies=proxyDict)
+    if response.status_code != 200:
+      headers = {'Authorization': 'Bearer {}'.format(cls.__refresh_token())}
+      response = requests.get('https://api.kroger.com/v1/products', params=parameters, headers=headers, proxies=proxyDict)
+    return response.json()['data']
+
+  @classmethod
+  def __extract_kroger_store(cls, response):
+    parsed_response = response.json()
+    if parsed_response['data'] == []:
+      return  None
+    blacklist = ['shell company']
+    return next((store for store in parsed_response['data'] if store['name'].lower() not in blacklist), None)
+
+  @classmethod
+  def __get_store_id(cls, at_risk_user_id):
     user = AtRiskUser.find_by_id(at_risk_user_id)
     nearest_store = user.store[0]
-    nearest_store_id = nearest_store.location_id
-    parameters = {'filter.term': term, 'filter.locationId': nearest_store_id}
-    if term == '':
-      return 'error'
-
-    headers = {'Authorization': 'Bearer {}'.format(Krogerservice.return_token())}
-    response = requests.get('https://api.kroger.com/v1/products', params=parameters, headers=headers, proxies=proxyDict)
-
-    if response.json()['data'] != []:
-      json_items = response.json()['data']
-      items = []
-      for item in json_items:
-        data = {}
-        data['description'] = item['description'] if 'description' in item.keys() else ''
-        data['upc'] = item['upc'] if 'upc' in item.keys() else ''
-        if ('aisleLocations' in item.keys()) and (item['aisleLocations'] != []):
-          data['aisle_number'] = int(item['aisleLocations'][0]['number'])
-        if ('price' in item['items'][0].keys()):
-          data['unit_price'] = item['items'][0]['price']['regular']
-
-        if 'images' in item.keys():
-          for image in item['images']:
-            if ('perspective' in image.keys()):
-              if image['perspective'] == 'front':
-                for size in image['sizes']:
-                  if size['size'] == 'medium':
-                    data['image'] = size['url']
-
-        items.append(data)
-      return { 'data': { 'id': 'items', 'attributes':  items } }
-    else:
-      return 'error'
+    return nearest_store.location_id
