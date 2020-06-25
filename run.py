@@ -1,25 +1,42 @@
 from trackbasket_be import create_app
 from flask_socketio import SocketIO, send
+from flask_socketio import join_room, leave_room, emit
+from flask import request
+# from flask import Flask, render_template
 # do this once you're ready for production, etc:
 # config_name = os.getenv('APP_SETTINGS')
 config_name = "development"
 
 app = create_app(config_name)
-socketio = SocketIO(app)
+# app = Flask(__name__)
+socketio = SocketIO(app, cors_allowed_origins='*', logger=True, engineio_logger=True)
 
-from flask_socketio import join_room, leave_room
+@socketio.on('connect')
+def on_connect():
+  print('just connected')
 
-@socketio.on('join')
+@socketio.on('joinRoom')
 def on_join(data):
-    import ipdb; ipdb.set_trace()
-    username = data['username']
-    room = data['room']
-    join_room(room)
-    send(username + ' has entered the room.', room=room)
+    id = data['id']
+    print('id: ' + data['id'])
+    join_room(id)
 
-@socketio.on('message')
-def handle_message(message):
-    print('received message: ' + message)
+@socketio.on('chat message')
+def handle_message(data):
+  room = data['id']
+  
+  emit('chat message', data['message'], room=room)
+
+@socketio.on('leaveRoom')
+def on_leave(data):
+  print('about to leave room {}'.format(data['id']))
+  leave_room(id)
+
+@socketio.on('statusChange')
+def change_status(data):
+  room = data["id"]
+  print('changing status' + data["message"])
+  emit('status change', data["message"], room=room)
 
 if __name__ == '__main__':
   socketio.run(app)
