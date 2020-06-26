@@ -9,6 +9,7 @@ class ShoppingList(BaseModel, db.Model):
   status = db.Column(db.String)
   at_risk_user_id = db.Column(db.Integer, db.ForeignKey('at_risk_users.id'))
   created_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+  volunteer_id = db.Column(db.String)
   items = db.relationship('Item', backref='shopping_list')
   
   @classmethod
@@ -38,13 +39,16 @@ class ShoppingList(BaseModel, db.Model):
     db.session.commit()
 
   def update(self, data):
+    if 'volunteer_id' in data.keys():
+      self.volunteer_id = data['volunteer_id']
+      db.session.commit()
     self.update_status(data['status'])
     self.delete_existing_items()
     self.add_items(data["items"])
     db.session.commit()
 
   def json(self, store):
-    return {'data': {  "id": "shoppinglist","attributes":
+    return {'data': {  "id": "shoppinglist", "volunteer_id": self.volunteer_id, "attributes":
           { "name": store.name, "address": store.address, "city": store.city, "state": store.state, "zipcode": store.zipcode,
             "storeId": store.location_id, "latitude_longitude": [float(store.latitude), float(store.longitude)], "status": self.status,
             "created_date": self.created_date.strftime("%d/%m/%Y %H:%M:%S"),

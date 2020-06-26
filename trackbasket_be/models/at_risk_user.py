@@ -2,6 +2,7 @@ from .basemodel import BaseModel, db
 from .store import Store
 from .shopping_list import ShoppingList
 from .store import Store
+from .conversation import Conversation
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import backref
 import datetime 
@@ -18,6 +19,7 @@ class AtRiskUser(BaseModel, db.Model):
   phone_number = db.Column(db.String)
   store = db.relationship('Store', backref=backref('at_risk_user', uselist=False))
   shopping_lists = db.relationship('ShoppingList', backref='at_risk_user')
+  conversations = db.relationship('Conversation', backref='at_risk_user')
 
   def json(self):
     return {'data': { 'id': 'at_risk_user', 'attributes': {'name': self.name, 'at_risk_user_id': self.at_risk_user_id, 'address': self.address, 'city': self.city, 'state': self.state, 'zip code': self.zipcode, 'phone number': self.phone_number} } }

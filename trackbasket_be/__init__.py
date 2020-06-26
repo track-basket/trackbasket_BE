@@ -32,6 +32,7 @@ def create_app(config_name):
   from trackbasket_be.resources.shopping_list import ShoppingLists
   from trackbasket_be.models.store import Store
   from trackbasket_be.resources.items import Items
+  from trackbasket_be.resources.conversation import Conversations
   from trackbasket_be.resources.list_shopping_lists import ListShoppingLists
   import os
 # POSTGRES = {
@@ -47,7 +48,7 @@ def create_app(config_name):
   api.add_resource(AtRiskUsers, '/atriskuser/<string:id>')
   api.add_resource(Stores, '/store/<string:id>')
   api.add_resource(Items, '/items')
-
+  api.add_resource(Conversations, '/conversations')
   api.add_resource(ShoppingLists, '/shoppinglist/<string:id>')
   api.add_resource(ListShoppingLists, '/listshoppinglists/')
   
