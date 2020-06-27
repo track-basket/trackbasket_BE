@@ -3,4 +3,10 @@ Flask-RESTful
 Flask-SQLAlchemy
 Flask-Script
 Flask==1.0.0
+coverage<6.0,>=5.1
+eventlet<0.26.0,>=0.25.2
+flask-socketio<5.0.0,>=4.3.0
+gunicorn<21.0.0,>=20.0.4
+ipdb<0.14.0,>=0.13.2
 psycopg2
+requests<3.0.0,>=2.23.0

@@ -41,6 +41,7 @@ class ShoppingList(BaseModel, db.Model):
     self.update_status(data['status'])
     self.delete_existing_items()
     self.add_items(data["items"])
+    db.session.commit()
 
   def json(self, store):
     return {'data': {  "id": "shoppinglist","attributes":

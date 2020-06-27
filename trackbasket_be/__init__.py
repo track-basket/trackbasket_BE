@@ -2,6 +2,7 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
+
 db = SQLAlchemy()
 
 def create_app(config_name):
@@ -10,13 +11,14 @@ def create_app(config_name):
   from flask_restful import Resource, Api
   from trackbasket_be.config import app_config
 
-
   app = Flask(__name__)
   api = Api(app)
   app.config.from_object(app_config[config_name])
   # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
   # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\%(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
   # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+  
 
   db.init_app(app)
   
@@ -40,7 +42,7 @@ def create_app(config_name):
 #     'port': '5432',
 # }
 
-
+  
   api.add_resource(Volunteers, '/volunteer/<string:id>')
   api.add_resource(AtRiskUsers, '/atriskuser/<string:id>')
   api.add_resource(Stores, '/store/<string:id>')
