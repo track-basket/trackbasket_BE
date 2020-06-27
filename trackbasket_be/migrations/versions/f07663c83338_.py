@@ -30,7 +30,8 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('conversation_id', sa.Integer(), nullable=True),
     sa.Column('text', sa.String(), nullable=True),
-    sa.Column('created_date', sa.DateTime(), nullable=True),
+    sa.Column('created_date', sa.String(), nullable=True),
+    # sa.Column('created_date', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['conversation_id'], ['conversations.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
