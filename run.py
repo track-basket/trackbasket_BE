@@ -32,10 +32,11 @@ def handle_message(data):
   if conversation is None:
     conversation = Conversation.create(at_risk_user.id, data['volunteer_id'])
   conversation.add_message(data['message']['text'], data['message']['author'], data['message']['timestamp'])
-  emit('chat message', data['message']['text'], room=room)
+  emit('chat message', data['message'], room=room)
 
 @socketio.on('leaveRoom')
 def on_leave(data):
+  id = data['id']
   print('about to leave room {}'.format(data['id']))
   leave_room(id)
 
