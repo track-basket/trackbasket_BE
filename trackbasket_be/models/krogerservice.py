@@ -2,7 +2,7 @@ from flask_restful import Resource, reqparse, request
 from .at_risk_user import AtRiskUser
 import requests, os, json
 
-proxyDict = { "http"  : os.environ.get('FIXIE_URL', ''), "https" : os.environ.get('FIXIE_URL', '') }
+# proxyDict = { "http"  : os.environ.get('FIXIE_URL', ''), "https" : os.environ.get('FIXIE_URL', '') }
 
 class Krogerservice:
 
