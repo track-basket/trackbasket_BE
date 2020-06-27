@@ -78,10 +78,10 @@ class Krogerservice:
     number_results = 5 
     parameters = {'filter.zipCode.near': zipcode, 'filter.limit':number_results}
     headers = {'Authorization': 'Bearer {}'.format(token)}
-    response = requests.get('https://api.kroger.com/v1/locations?', params=parameters, headers=headers, proxies=proxyDict)
+    response = requests.get('https://api.kroger.com/v1/locations?', params=parameters, headers=headers)
     if response.status_code != 200:
       headers = {'Authorization': 'Bearer {}'.format(cls.__refresh_token())}
-      response = requests.get('https://api.kroger.com/v1/locations?', params=parameters, headers=headers, proxies=proxyDict)
+      response = requests.get('https://api.kroger.com/v1/locations?', params=parameters, headers=headers)
     return response
 
   @classmethod
@@ -96,10 +96,10 @@ class Krogerservice:
     token = cls.__return_token()
     parameters = {'filter.term': term, 'filter.locationId': nearest_store_id}
     headers = {'Authorization': 'Bearer {}'.format(token)}
-    response = requests.get('https://api.kroger.com/v1/products', params=parameters, headers=headers, proxies=proxyDict)
+    response = requests.get('https://api.kroger.com/v1/products', params=parameters, headers=headers)
     if response.status_code != 200:
       headers = {'Authorization': 'Bearer {}'.format(cls.__refresh_token())}
-      response = requests.get('https://api.kroger.com/v1/products', params=parameters, headers=headers, proxies=proxyDict)
+      response = requests.get('https://api.kroger.com/v1/products', params=parameters, headers=headers)
     return response.json()['data']
 
   @classmethod
