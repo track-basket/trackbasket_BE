@@ -21,8 +21,8 @@ class Conversation(BaseModel, db.Model):
     db.session.commit()
     return conversation
 
-  def add_message(self, text):
-    message = Message(text=text, conversation=self)
+  def add_message(self, text, author):
+    message = Message(text=text, conversation=self, author=author)
     db.session.add(message)
     db.session.commit()
 

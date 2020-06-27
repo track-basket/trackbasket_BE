@@ -10,4 +10,4 @@ class Message(BaseModel, db.Model):
   created_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
   
   def json(self):
-    return {"text": self.text, "timestamp": self.created_date.strftime("%d/%m/%Y %H:%M:%S")}
+    return {"text": self.text, "timestamp": self.created_date.strftime("%d/%m/%Y %H:%M:%S"), "author": self.author}

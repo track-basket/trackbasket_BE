@@ -31,7 +31,7 @@ def handle_message(data):
   conversation = Conversation.find_by_id(at_risk_user.id, data['volunteer_id'])
   if conversation is None:
     conversation = Conversation.create(at_risk_user.id, data['volunteer_id'])
-  conversation.add_message(data['message'])
+  conversation.add_message(data['message'], data['author'])
   emit('chat message', data['message'], room=room)
 
 @socketio.on('leaveRoom')
