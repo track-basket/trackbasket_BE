@@ -29,6 +29,7 @@ As the thread of COVID-19 rises, it's not safe for some people to leave their ho
 
 Back end:
 * Frameworks: Flask
+* Websockets: Socket.io
 * Language: Python 3.7
 * Deployment: Heroku
 * Database: PostgreSQL
@@ -189,6 +190,42 @@ Retrieve all shopping lists' and its information:
 ```sh
 GET https://trackbasket.herokuapp.com/listshoppinglists
 ```
+
+### Conversations Endpoint
+Retrieve a conversation between an `at_risk_user` and a `volunteer` :
+```sh
+GET https://trackbasket.herokuapp.com/conversations?at_risk_user_id=<at_risk_user_id>&volunteer_id=<volunteer_id>
+```
+Expected response:
+
+```sh
+{
+    "data": {
+        "id": "conversation",
+        "attributes": {
+            "messages": [
+                {
+                    "text": "Alex: Can't find the butter",
+                    "timestamp": "27/06/2020 04:43:23",
+		    "author": "volunteer"
+                },
+                {
+                    "text": "Meg: Forget about it, I don't need it",
+                    "timestamp": "27/06/2020 04:43:35",
+		    "author": "at_risk_user"
+                },
+                {
+                    "text": "Alex: Alright",
+                    "timestamp": "27/06/2020 04:43:43",
+		    "author": "volunteer"
+                }
+            ]
+        }
+    }
+}
+```
+
+
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
 * Alex Robinson (PM) - [GitHub](https://github.com/scottalexandra)
