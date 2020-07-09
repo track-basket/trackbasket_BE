@@ -147,7 +147,7 @@ Expected response:
 
 ```
 
-### AtRiskUser Endpoints
+### AtRiskUser Endpoint
 
 Retrieve an at risk user's profile information:
 ```sh
@@ -166,7 +166,7 @@ Delete an at risk user:
 DELETE https://trackbasket.herokuapp.com/atriskuser/<at_risk_user_id>
 ```
 
-### ShoppingList Endpoints
+### ShoppingList Endpoint
 
 Retrieve a shopping list's information:
 ```sh
