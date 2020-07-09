@@ -2,7 +2,7 @@
 <p align="center">
   <a href="https://trackbasket.herokuapp.com/"><img width="500" height="300" src="https://user-images.githubusercontent.com/55954962/83821753-706c4f00-a68c-11ea-9c1b-2a2d24eddd94.jpg"></a>
 </p>
-TrackBasket is a grocery-delivery app for volunteer shoppers who serve people whose mobility is limited during the pandemic. The purpose of the app is to allow at-risk consumers to create shopping lists by searching items available at a nearby store and to make these lists available to volunteers who can sort them and select the one they can fulfill.
+TrackBasket is a grocery-delivery app for volunteer shoppers who serve people whose mobility is limited during the pandemic. The purpose of the app is to allow at-risk consumers to create shopping lists by searching items available at a nearby store and to make these lists available to volunteers who can sort them and select the one they can fulfill. Volunteers can chat with the at-risk consumers whose list they have adopted to ask for clarification while shopping.
 <br><br><br><br>
 
 <p align="center">
