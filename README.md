@@ -156,6 +156,14 @@ GET https://trackbasket.herokuapp.com/atriskuser/<at_risk_user_id>
 Create a new at risk user:
 ```sh
 POST https://trackbasket.herokuapp.com/atriskuser/<at_risk_user_id>
+{
+    "name": "Alexis",
+    "address": "125 ocean ave",
+    "city": "Denver",
+    "state": "ca",
+    "zipcode": "80203",
+    "phone_number": "123-456-7890"
+}
 ```
 Update an at risk user:
 ```sh
