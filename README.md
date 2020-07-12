@@ -160,7 +160,7 @@ POST https://trackbasket.herokuapp.com/atriskuser/<at_risk_user_id>
     "name": "Alexis",
     "address": "125 ocean ave",
     "city": "Denver",
-    "state": "ca",
+    "state": "CO",
     "zipcode": "80203",
     "phone_number": "123-456-7890"
 }
@@ -168,6 +168,14 @@ POST https://trackbasket.herokuapp.com/atriskuser/<at_risk_user_id>
 Update an at risk user:
 ```sh
 PATCH https://trackbasket.herokuapp.com/atriskuser/<at_risk_user_id>
+{
+    "name": "George",
+    "address": "12è ocean ave",
+    "city": "Denver",
+    "state": "CO",
+    "zipcode": "80203",
+    "phone_number": "123-456-7890"
+}
 ```
 Delete an at risk user:
 ```sh
